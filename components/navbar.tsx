@@ -8,7 +8,15 @@ export function Navbar() {
         <Link href="/" className="text-xl font-heading text-foreground">
           Task <span className="text-muted-foreground italic">Manager</span>
         </Link>
-        <ThemeSwitch />
+        <nav className="flex items-center gap-4">
+          <Link href="/login" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Login
+          </Link>
+          <Link href="/register" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Register
+          </Link>
+          <ThemeSwitch />
+        </nav>
       </div>
     </header>
   );
