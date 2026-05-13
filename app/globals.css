@@ -39,6 +39,7 @@
   --font-sans: "Inter", sans-serif;
   --font-heading: "Instrument Serif", serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-garamond: "EB Garamond", serif;
   --radius: 0.5rem;
   --shadow-x: 0px;
   --shadow-y: 4px;
@@ -94,6 +95,7 @@
   --font-sans: "Inter", sans-serif;
   --font-heading: "Instrument Serif", serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-garamond: "EB Garamond", serif;
   --radius: 0.5rem;
   --shadow-x: 0px;
   --shadow-y: 6px;
@@ -148,6 +150,7 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-heading: var(--font-heading);
+  --font-garamond: var(--font-garamond);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -179,4 +182,9 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }

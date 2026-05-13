@@ -46,6 +46,7 @@
 2. Soporte dark mode con `.dark`
 3. Focus states: `focus-visible:ring-2 focus-visible:ring-ring`
 4. Contenedor: `max-w-7xl mx-auto w-full`
+5. NO usar colores fuera de la paleta - mantener diseño minimalista sin acentos de color extra
 
 ## Componentes Base
 

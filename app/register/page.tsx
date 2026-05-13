@@ -45,7 +45,19 @@ export default function RegisterPage() {
         return
       }
 
-      router.push('/login?registered=true')
+      // Auto-login after register
+      const loginRes = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+
+      if (loginRes.ok) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        window.location.href = '/dashboard'
+      } else {
+        window.location.href = '/login'
+      }
     } catch {
       setError('Error de conexión')
     } finally {
@@ -127,6 +139,14 @@ export default function RegisterPage() {
               </button>
             </div>
           </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"
+          >
+            {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
+          </button>
         </form>
 
         <p className="mt-4 text-center text-sm text-muted-foreground">

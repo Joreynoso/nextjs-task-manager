@@ -32,7 +32,9 @@ export default function LoginPage() {
         return
       }
 
-      router.push('/dashboard')
+      // Small delay to ensure cookie is set before navigation
+      await new Promise(resolve => setTimeout(resolve, 100))
+      window.location.href = '/dashboard'
     } catch {
       setError('Error de conexión')
     } finally {

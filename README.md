@@ -19,13 +19,15 @@ We are currently building out the core features defined in the project specifica
 - Database modeling (`User` and `Task`) and synchronization with Supabase via Prisma.
 - Custom Authentication API (Register, Login, Logout, Session check).
 - Authentication UI (Login and Register pages).
+- Tasks CRUD API (create, read, update, delete, reorder).
+- Dashboard UI with Action Panel (sort by Custom/Recent/Oldest/Status, filter by status).
+- Sorting system with Custom Order option.
+- Testing & build verification.
 
 ### 🚧 In Progress / Pending
-- **Tasks API:** Endpoints for CRUD operations, filtering, sorting, and reordering.
-- **Dashboard UI:** Main interface including a Sidebar action panel for filters.
-- **Interactive Task List:** Implementing drag-and-drop reordering with `@dnd-kit`.
 - **UI Polish:** Adjusting shadcn components and applying the designated color palette.
-- **Testing & Deployment:** Vercel deployment setup.
+- **Drag & Drop:** Reordering with `@dnd-kit` (final stage).
+- **Deployment:** Vercel deployment setup.
 
 ## Getting Started
 
