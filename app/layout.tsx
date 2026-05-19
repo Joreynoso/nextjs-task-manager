@@ -6,6 +6,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/auth-provider";
+import { ScreenSizeDetector } from "@/components/ui/screen-size-detector";
 
 const instrumentSerif = Instrument_Serif({subsets:['latin'],weight:'400',variable:'--font-heading'});
 
@@ -32,13 +33,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <Navbar />
-            <main className="max-w-7xl mx-auto w-full flex-1">
-              {children}
-            </main>
-            <Footer />
-          </AuthProvider>
+           <AuthProvider>
+             <Navbar />
+             <main className="max-w-7xl mx-auto w-full flex-1">
+               {children}
+             </main>
+             <Footer />
+             <ScreenSizeDetector />
+           </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

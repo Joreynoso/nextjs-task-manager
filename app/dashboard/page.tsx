@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { TaskList } from '@/components/TaskList'
 import { ActionPanel } from '@/components/ActionPanel'
+import { NewTaskCard } from '@/components/NewTaskCard'
+import { SortDropdown } from '@/components/SortDropdown'
+import { FilterDropdown } from '@/components/FilterDropdown'
 
 interface Task {
   id: string
@@ -97,30 +100,49 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto flex gap-6 p-6">
-        <aside className="w-72 flex-shrink-0">
-          <ActionPanel
-            sort={sort}
-            onSortChange={setSort}
-            statusFilter={statusFilter}
-            onStatusFilterChange={setStatusFilter}
-            onAddTask={handleCreateTask}
-          />
-        </aside>
-
-        <main className="flex-1">
-          {loading ? (
-            <p className="text-muted-foreground">Loading...</p>
-          ) : (
-            <TaskList
-              tasks={tasks}
-              onUpdate={handleUpdateTask}
-              onDelete={handleDeleteTask}
-              onReorder={handleReorder}
+    <div className="min-h-screen bg-background xl:px-0 md:px-4">
+      <div className="max-w-7xl mx-auto pt-10 pb-10">
+        <div className="flex flex-col lg:flex-row gap-6">
+          <aside className="hidden lg:block lg:w-72 flex-shrink-0">
+            <ActionPanel
+              sort={sort}
+              onSortChange={setSort}
+              statusFilter={statusFilter}
+              onStatusFilterChange={setStatusFilter}
+              onAddTask={handleCreateTask}
             />
-          )}
-        </main>
+          </aside>
+
+          <main className="flex-1 min-w-0 space-y-4">
+            <div className="lg:hidden">
+              <NewTaskCard onAddTask={handleCreateTask} />
+            </div>
+
+            <div className="lg:hidden flex items-center gap-2 flex-wrap">
+              <SortDropdown
+                value={sort}
+                onChange={setSort}
+                disabled={sort === 'custom'}
+              />
+              <FilterDropdown
+                value={statusFilter}
+                onChange={setStatusFilter}
+              />
+            </div>
+
+            {loading ? (
+              <p className="text-muted-foreground">Loading...</p>
+            ) : (
+              <TaskList
+                tasks={tasks}
+                onUpdate={handleUpdateTask}
+                onDelete={handleDeleteTask}
+                onReorder={handleReorder}
+                sort={sort}
+              />
+            )}
+          </main>
+        </div>
       </div>
     </div>
   )

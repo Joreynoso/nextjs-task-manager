@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { GripVertical, Pencil, Trash2, Check, X } from 'lucide-react'
+import { GripVertical, Pencil, Trash2, Check, X, Loader2 } from 'lucide-react'
 
 interface TaskItemProps {
   task: {
@@ -14,6 +14,9 @@ interface TaskItemProps {
   }
   onUpdate: (id: string, data: { title?: string; description?: string; status?: string }) => void
   onDelete: (id: string) => void
+  isDraggable?: boolean
+  isUpdating?: boolean
+  isDeleting?: boolean
 }
 
 const statusLabels: Record<string, string> = {
@@ -22,7 +25,7 @@ const statusLabels: Record<string, string> = {
   hecho: 'Done'
 }
 
-export function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
+export function TaskItem({ task, onUpdate, onDelete, isDraggable = false, isUpdating = false, isDeleting = false }: TaskItemProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(task.title)
   const [editDescription, setEditDescription] = useState(task.description || '')
@@ -91,9 +94,19 @@ export function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
         <div className="flex gap-2">
           <button
             onClick={handleSave}
-            className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 text-sm"
+            disabled={isUpdating}
+            className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Check size={14} /> Save
+            {isUpdating ? (
+              <>
+                <Loader2 size={14} className="animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Check size={14} /> Save
+              </>
+            )}
           </button>
           <button
             onClick={handleCancel}
@@ -118,13 +131,15 @@ return (
       style={style}
       className="p-4 bg-card border rounded-xl flex items-start gap-3 group hover:shadow-md transition-shadow"
     >
-      <button
-        {...attributes}
-        {...listeners}
-        className="mt-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing opacity-50 group-hover:opacity-100 transition-opacity"
-      >
-        <GripVertical size={18} />
-      </button>
+      {isDraggable && (
+        <button
+          {...attributes}
+          {...listeners}
+          className="mt-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing opacity-50 group-hover:opacity-100 transition-opacity"
+        >
+          <GripVertical size={18} />
+        </button>
+      )}
 
       <div className="flex-1 min-w-0">
         <h3 className="font-medium text-foreground truncate">{task.title}</h3>
@@ -146,10 +161,11 @@ return (
         </button>
         <button
           onClick={() => onDelete(task.id)}
-          className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+          disabled={isDeleting}
+          className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           title="Delete"
         >
-          <Trash2 size={16} />
+          {isDeleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
         </button>
       </div>
     </div>
